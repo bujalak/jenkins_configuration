@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    triggers {
+    githubPush()
+}
+
 
     tools {
         jdk 'JDK_21'       // Name from Global Tool Configuration

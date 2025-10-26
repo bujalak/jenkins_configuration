@@ -69,7 +69,7 @@ pipeline {
                     reportFiles: '*.html',
                     reportName: 'Cucumber HTML Report',
                     allowMissing: true,
-                    alwaysLinkToLastBuild: true
+                    alwaysLinkToLastBuild: true //added html reports
                 ])
             }
         }

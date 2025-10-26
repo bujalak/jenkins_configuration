@@ -3,8 +3,8 @@ pipeline {
 
     tools {
         jdk 'JDK_21'       // Name from Global Tool Configuration
-        maven 'Maven'    // Name from Global Tool Configuration
-        git 'Git'        // Name from Global Tool Configuration
+        maven 'Maven'      // Name from Global Tool Configuration
+        git 'Git'          // Name from Global Tool Configuration
     }
 
     parameters {
@@ -21,7 +21,7 @@ pipeline {
                 echo "Checking out default branch"
                 checkout([$class: 'GitSCM',
                     branches: [[name: '*/main']], // Replace 'main' with your default branch if needed
-                    userRemoteConfigs: [[url: 'https://github.com/your-org/your-repo.git']]
+                    userRemoteConfigs: [[url: 'https://github.com/bujalak/jenkins_configuration.git']]
                 ])
             }
         }
@@ -45,10 +45,7 @@ pipeline {
 
         stage('Publish Reports') {
             steps {
-                // TestNG XML
-                testNGPublisher 'test-output/testng-results.xml'
-
-                // TestNG HTML
+                // TestNG HTML report
                 publishHTML(target: [
                     reportDir: 'test-output',
                     reportFiles: 'emailable-report.html',
@@ -57,12 +54,14 @@ pipeline {
                     alwaysLinkToLastBuild: true
                 ])
 
-                // Cucumber JSON
-                cucumber fileIncludePattern: '**/test-ouput/json-report/cucumber.json'
+                // Cucumber JSON report
+                cucumber fileIncludePattern: '**/test-output/json-report/cucumber.json', 
+                         reportTitle: 'Cucumber Report', 
+                         sortingMethod: 'ALPHABETICAL'
 
-                // Cucumber HTML
+                // Cucumber HTML report
                 publishHTML(target: [
-                    reportDir: 'test-ouput',
+                    reportDir: 'test-output',
                     reportFiles: 'overview-features.html',
                     reportName: 'Cucumber HTML Report',
                     allowMissing: true,

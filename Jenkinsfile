@@ -66,7 +66,7 @@ pipeline {
                 // Cucumber HTML report
                 publishHTML(target: [
                     reportDir: 'test-output',
-                    reportFiles: 'overview-features.html',
+                    reportFiles: '*.html',
                     reportName: 'Cucumber HTML Report',
                     allowMissing: true,
                     alwaysLinkToLastBuild: true
